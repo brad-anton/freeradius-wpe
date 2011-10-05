@@ -1,0 +1,41 @@
+FreeRADIUS-WPE (Wireless Pwnage Edition)
+By Brad Antoniewicz and Josh Wright
+brad.antoniewicz@foundstone.com
+
+More information here:
+http://www.willhackforsushi.com/?page_id=37
+-------------------------------------------
+
+From Source:
+
+wget ftp://ftp.freeradius.org/pub/radius/old/freeradius-server-2.1.11.tar.bz2
+wget http://www.opensecurityresearch.com/files/freeradius-wpe-2.1.11.patch
+
+tar -jxvf freeradius-server-2.1.11.tar.bz2
+cd freeradius-server-2.1.11
+patch -p1 < freeradius-wpe-2.1.11.patch
+
+./configure
+make
+sudo make install
+
+You may also have to:
+cd /usr/local/etc/raddb/certs/
+./bootstrap
+
+Using Binary:
+
+If you're using the .deb, it has been tested with BackTrack 5 R1, but will likely work with other versions and Ubuntu/Debian. 
+
+wget http://www.opensecurityresearch.com/files/freeradius-server-wpe_2.1.11-1_i386.deb
+
+sudo dpkg --install freeradius-server-wpe_2.1.11-1_i386.deb
+sudo ldconfig 
+
+and just to confirm:
+radiusd -v (make sure its 2.1.11)
+
+
+
+
+
