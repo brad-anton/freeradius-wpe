@@ -17,8 +17,8 @@ diff -uNr freeradius-server-2.1.12/raddb/users freeradius-server-2.1.12-wpe/radd
  
  # On no match, the user is denied access.
 +#"bradtest" Cleartext-Password := "bradtest", MS-CHAP-Use-NTLM-Auth := 0
-++DEFAULT Cleartext-Password := "foo", MS-CHAP-Use-NTLM-Auth := 0
-++DEFAULT Cleartext-Password := "a"
++DEFAULT Cleartext-Password := "foo", MS-CHAP-Use-NTLM-Auth := 0
++DEFAULT Cleartext-Password := "a"
 diff -uNr freeradius-server-2.1.12/src/include/radiusd.h freeradius-server-2.1.12-wpe/src/include/radiusd.h
 --- freeradius-server-2.1.12/src/include/radiusd.h	2011-09-30 10:12:07.000000000 -0400
 +++ freeradius-server-2.1.12-wpe/src/include/radiusd.h	2012-08-15 10:34:20.369565898 -0400
@@ -246,7 +246,7 @@ diff -uNr freeradius-server-2.1.12/src/modules/rlm_mschap/rlm_mschap.c freeradiu
  		if (do_mschap(inst, request, password, challenge->vp_octets,
  			      response->vp_octets + offset, nthashhash,
 -			      do_ntlm_auth) < 0) {
-+			      do_ntlm_auth, username->vp_strvalue) < 0) {
++			      do_ntlm_auth, request->username->vp_strvalue) < 0) {
  			RDEBUG2("MS-CHAP-Response is incorrect.");
  			goto do_error;
  		}
@@ -255,7 +255,7 @@ diff -uNr freeradius-server-2.1.12/src/modules/rlm_mschap/rlm_mschap.c freeradiu
  		if (do_mschap(inst, request, nt_password, mschapv1_challenge,
  			      response->vp_octets + 26, nthashhash,
 -			      do_ntlm_auth) < 0) {
-+			      do_ntlm_auth, username->vp_strvalue) < 0) {
++			      do_ntlm_auth, request->username->vp_strvalue) < 0) {
  			int i;
  			char buffer[128];
  
