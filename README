@@ -8,6 +8,14 @@ http://www.willhackforsushi.com/?page_id=37
 
 Current version works with: freeradius-server-2.1.12
 
+Supported and tested EAP Types/Inner Authentication Methods (others may also work):
+	PEAP/PAP (OTP)
+	PEAP/MSCHAPv2
+	EAP-TTLS/PAP (includes OTPs)
+	EAP-TTLS/MSCHAPv1
+	EAP-TTLS/MSCHAPv2
+	EAP-MD5
+
 Update 8/15/2012: 
 
 	Housekeeeping:
