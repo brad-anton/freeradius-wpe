@@ -6,36 +6,98 @@ More information here:
 http://www.willhackforsushi.com/?page_id=37
 -------------------------------------------
 
-From Source:
+Current version works with: freeradius-server-2.1.12
 
-wget ftp://ftp.freeradius.org/pub/radius/old/freeradius-server-2.1.11.tar.bz2
-wget http://www.opensecurityresearch.com/files/freeradius-wpe-2.1.11.patch
+Update 8/15/2012: 
 
-tar -jxvf freeradius-server-2.1.11.tar.bz2
-cd freeradius-server-2.1.11
-patch -p1 < freeradius-wpe-2.1.11.patch
+	Housekeeeping:
+	I decided to Remove the versioning from the patch name. This way I 
+	can just update the github and maintain a constant download location.
+	This README will define what version the patch is for. 
 
-./configure
-make
-sudo make install
-
-You may also have to:
-cd /usr/local/etc/raddb/certs/
-./bootstrap
-
-Using Binary:
-
-If you're using the .deb, it has been tested with BackTrack 5 R1, but will likely work with other versions and Ubuntu/Debian. 
-
-wget http://www.opensecurityresearch.com/files/freeradius-server-wpe_2.1.11-1_i386.deb
-
-sudo dpkg --install freeradius-server-wpe_2.1.11-1_i386.deb
-sudo ldconfig 
-
-and just to confirm:
-radiusd -v (make sure its 2.1.11)
+	Changes:
+	+Added john NETNTLM formated output
+	+Readded PAP and EAP-MD5 support
 
 
+Install:
+
+	From Source:
+	
+	wget ftp://ftp.freeradius.org/pub/freeradius/freeradius-server-2.1.12.tar.bz2
+
+	Over time, if a newer version of freeradius comes out, this link will change to:
+
+	wget ftp://ftp.freeradius.org/pub/radius/old/freeradius-server-2.1.12.tar.bz2
+
+	https://raw.github.com/brad-anton/freeradius-wpe/master/freeradius-wpe.patch
+
+	tar -jxvf freeradius-server-2.1.12.tar.bz2
+	cd freeradius-server-2.1.12
+	patch -p1 < freeradius-wpe.patch
+
+	./configure
+	make
+	sudo make install
+
+	You may also have to:
+	cd /usr/local/etc/raddb/certs/
+	./bootstrap
 
 
 
+
+
+	Using Binary:
+
+	If you're using the .deb, it has been tested with BackTrack 5 R2, but will likely work with other versions and Ubuntu/Debian. 
+
+	wget https://github.com/brad-anton/freeradius-wpe/raw/master/freeradius-server-wpe_2.1.12-1_i386.deb
+
+	sudo dpkg --install freeradius-server-wpe_2.1.12-1_i386.deb
+	sudo ldconfig 
+
+	and just to confirm:
+	radiusd -v
+	
+	make sure it says:
+	radiusd: FreeRADIUS-WPE Version 2.1.12
+
+Usage:
+	
+	Run "radiusd" and direct an access point to the server. Once a client connects 
+	freeradius-wpe will store the credentials in:
+	
+	/usr/local/var/log/radius/freeradius-server-wpe.log
+	
+	by default, otherwise you can define an alternative location using "wpelogfile"
+	config option.
+
+	Depending on the EAP Type and inner auth. creds used, the info in the log file
+	might be plaintext or encrypted. Most likely it'll be MSCHAPv2, if it is, 
+	you'll need to crack those credentials with asleap or john, or something else. 
+	
+
+	If you don't want to use a hardware access point, you can use hostapd. Here is a
+	sample hostapd.conf that will set up an AP and direct it to FreeRADIUS-WPE 
+	be sure to run "radiusd" first. 
+
+------- Start hostapd.conf -----------
+interface=wlan0
+driver=nl80211
+ssid=opensecurityresearch
+logger_stdout=-1
+logger_stdout_level=0
+dump_file=/tmp/hostapd.dump
+ieee8021x=1
+eapol_key_index_workaround=0
+own_ip_addr=127.0.0.1
+auth_server_addr=127.0.0.1
+auth_server_port=1812
+auth_server_shared_secret=testing123
+wpa=1
+wpa_key_mgmt=WPA-EAP
+channel=1
+wpa_pairwise=TKIP CCMP
+
+------ End hostapd.conf -----------
