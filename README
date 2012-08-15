@@ -6,7 +6,7 @@ More information here:
 http://www.willhackforsushi.com/?page_id=37
 -------------------------------------------
 
-Current version works with: freeradius-server-2.1.12
+Current freeradius-wpe.patch is for: freeradius-server-2.1.12.tar.bz2
 
 Supported and tested EAP Types/Inner Authentication Methods (others may also work):
 	PEAP/PAP (OTP)
@@ -38,11 +38,11 @@ Install:
 
 	wget ftp://ftp.freeradius.org/pub/radius/old/freeradius-server-2.1.12.tar.bz2
 
-	https://raw.github.com/brad-anton/freeradius-wpe/master/freeradius-wpe.patch
+	wget https://raw.github.com/brad-anton/freeradius-wpe/master/freeradius-wpe.patch
 
 	tar -jxvf freeradius-server-2.1.12.tar.bz2
 	cd freeradius-server-2.1.12
-	patch -p1 < freeradius-wpe.patch
+	patch -p1 < ../freeradius-wpe.patch
 
 	./configure
 	make
@@ -52,9 +52,7 @@ Install:
 	cd /usr/local/etc/raddb/certs/
 	./bootstrap
 
-
-
-
+	---
 
 	Using Binary:
 
@@ -64,6 +62,10 @@ Install:
 
 	sudo dpkg --install freeradius-server-wpe_2.1.12-1_i386.deb
 	sudo ldconfig 
+
+        You may also have to:
+        cd /usr/local/etc/raddb/certs/
+        ./bootstrap
 
 	and just to confirm:
 	radiusd -v
