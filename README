@@ -16,6 +16,12 @@ Supported and tested EAP Types/Inner Authentication Methods (others may also wor
 	EAP-TTLS/MSCHAPv2
 	EAP-MD5
 
+Note:
+    I've started to implement more attacks (including EAP-FAST)
+    within hostapd-wpe, it is still under dev, but may be of some 
+    interest:
+         https://github.com/OpenSecurityResearch/hostapd-wpe
+
 Update 8/15/2012: 
 
 	Housekeeeping:
@@ -47,6 +53,7 @@ Install:
 	./configure
 	make
 	sudo make install
+    sudo ldconfig
 
 	You may also have to:
 	cd /usr/local/etc/raddb/certs/
