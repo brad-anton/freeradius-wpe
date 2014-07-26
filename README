@@ -1,3 +1,15 @@
+IMPORTANT: 	This is likely not going to be maintained much longer. Instead you should 
+		use hostapd-wpe:
+		
+		https://github.com/OpenSecurityResearch/hostapd-wpe
+
+		It supports all the same functionality (minus EAP-MD5 over wifi) and 
+		supports "Karma" style AP attacks, Heartbleed against clients and 
+		much more! 
+
+If you insist on using FreeRADIUS-WPE, see below:
+
+
 FreeRADIUS-WPE (Wireless Pwnage Edition)
 By Brad Antoniewicz and Josh Wright
 brad.antoniewicz@foundstone.com
